@@ -123,5 +123,28 @@ var regexEnum = {
     // 匹配帐号是否合法(字母开头，允许5-16字节，允许字母数字下划线)：^[a-zA-Z][a-zA-Z0-9_]{4,15}$
 };
 </script>
+<script src="https://static.runoob.com/assets/jquery-validation-1.14.0/lib/jquery.js"></script>
+<script src="./validate.min.js"></script>
+<script>
+// 添加自定义验证
+$.validator.addMethod("isTel", function(value, element) {
+  var phone = /^[0-9]{3,4}\-[0-9]{7,8}$/ ; // /^([0-9]{3,4}-)?[0-9]{7,8}$/
+  return this.optional(element) || (phone.test(value));
+ }, "电话号码格式不正确（xxxx-12346578）");
+ $('#form').validate({
+      rules:{
+        company_phone:{
+          isTel : true,   
+        }
+    }
+    }) 
+    var isForm =   $('#form').valid() //错误信息
+    if(!isForm){
+        $('body').stop().animate({
+          scrollTop: ($informationFrom.find('.error').offset().top-100)
+      }, 1200)
+     return false;
+    } 
+</script>
 </body>
 </html>
